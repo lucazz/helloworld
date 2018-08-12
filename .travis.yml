@@ -1,0 +1,23 @@
+sudo: required
+services:
+  - docker
+env:
+  global:
+    - IMAGE_NAME=lucazz/helloworld
+
+script:
+  - read -n 7 GIT_HASH <<< "$TRAVIS_COMMIT"
+  - docker build --tag $IMAGE_NAME:$TRAVIS_BRANCH-$GIT_HASH .
+  - docker run --detach --publish "80:80" $IMAGE_NAME:$TRAVIS_BRANCH-$GIT_HASH
+  - docker ps --all
+  - curl --retry 10 --retry-delay 5 --verbose http://localhost/
+  - curl --retry 10 --retry-delay 5 --verbose http://localhost/health
+  - curl --retry 10 --retry-delay 5 --verbose http://localhost/version
+
+before_deploy:
+  - docker login --username $REGISTRY_USER --password $REGISTRY_PASS >/dev/null 2>&1
+  - docker tag $IMAGE_NAME:$TRAVIS_BRANCH-$GIT_HASH $IMAGE_NAME:latest
+
+deploy:
+  provider: script
+  script: docker push $IMAGE_NAME:latest && docker push $IMAGE_NAME:$TRAVIS_BRANCH-$GIT_HASH
