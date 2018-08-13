@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: {{ template "nginx-ingress.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+    component: "{{ .Values.defaultBackend.name }}"
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+  name: {{ template "nginx-ingress.defaultBackend.fullname" . }}
+spec:
+  clusterIP: "{{ .Values.defaultBackend.service.clusterIP }}"
+  ports:
+    - port: {{ .Values.defaultBackend.service.servicePort }}
+      targetPort: 8080
+  selector:
+    app: {{ template "nginx-ingress.name" . }}
+    component: "{{ .Values.defaultBackend.name }}"
+    release: {{ .Release.Name }}
+  type: "{{ .Values.defaultBackend.service.type }}"

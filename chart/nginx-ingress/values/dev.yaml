@@ -1,0 +1,24 @@
+namespace: dev
+controller:
+  resources:
+    limits:
+      cpu: 100m
+      memory: 512Mi
+    requests:
+      cpu: 50m
+      memory: 300Mi
+  ingressClass: dev
+  config:
+    enable-underscores-in-headers: "true"
+    proxy-stream-timeout: "12000s"
+  service:
+    nodePorts:
+      http: 31002
+
+defaultBackend:
+  limits:
+    cpu: 10m
+    memory: 20Mi
+  requests:
+    cpu: 10m
+    memory: 20Mi

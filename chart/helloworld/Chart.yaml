@@ -1,0 +1,5 @@
+name: helloworld
+version: 0.0.1
+appVersion: 0.0.1
+description: Hello world app
+icon: https://github.com/kubernetes/kubernetes/raw/master/logo/logo.png

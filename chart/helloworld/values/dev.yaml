@@ -1,0 +1,7 @@
+namespace: dev
+replicas: 5
+ingress:
+  hosts:
+  - helloworld.kubernetes.gordinho.ninja
+  annotations:
+    kubernetes.io/ingress.class: dev

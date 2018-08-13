@@ -17,7 +17,12 @@ script:
 before_deploy:
   - docker login --username $REGISTRY_USER --password $REGISTRY_PASS >/dev/null 2>&1
   - docker tag $IMAGE_NAME:$TRAVIS_BRANCH-$GIT_HASH $IMAGE_NAME:latest
+  - docker push $IMAGE_NAME:latest
+  - docker push $IMAGE_NAME:$TRAVIS_BRANCH-$GIT_HASH
 
 deploy:
   provider: script
-  script: docker push $IMAGE_NAME:latest && docker push $IMAGE_NAME:$TRAVIS_BRANCH-$GIT_HASH
+  script: echo 'Deploying...'
+  # script: scripts/k8s-deploy.sh
+  on:
+    branch: master

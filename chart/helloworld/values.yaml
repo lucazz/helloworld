@@ -1,0 +1,23 @@
+name: helloworld
+namespace: default
+replicas: 2
+restartPolicy: Always
+terminationGracePeriodSeconds: 60
+
+image:
+  repository: lucazz/helloworld
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  name: helloworld
+  type: ClusterIP
+  internalPort: "80"
+  externalport: "8080"
+
+ingress:
+  enabled: true
+  hosts:
+  - www.example.com
+  annotations:
+    kubernetes.io/ingress.class: default

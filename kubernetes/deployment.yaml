@@ -2,20 +2,22 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: helloworld-deployment
+  namespace: default
   labels:
     app: helloworld
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: helloworld
   template:
     metadata:
       labels:
-        app: lucazz/helloworld
+        app: helloworld
     spec:
       containers:
       - name: helloworld
         image: lucazz/helloworld:latest
         ports:
-        - containerPort: 80
+        - name: http
+          containerPort: 80

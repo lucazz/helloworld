@@ -1,12 +1,15 @@
 apiVersion: v1
 kind: Service
 metadata:
-  app: helloworld
+  name: helloworld
+  namespace: default
   labels:
-    name: helloworld
+    app: helloworld
 spec:
   type: LoadBalancer
-  ports:
-  - port: 8080
   selector:
-name: helloworld
+    app: helloworld
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: http
